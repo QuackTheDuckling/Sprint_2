@@ -27,8 +27,12 @@ class TotalPoints(PointsForPlace, PointsForMeters):
         if isinstance(self.get_points_for_meters(meters), (int, float)) and isinstance(self.get_points_for_place(place), (int, float)):
             total = self.get_points_for_place(place) + self.get_points_for_meters(meters)
             return total
+        elif isinstance(self.get_points_for_meters(meters), str) and isinstance(self.get_points_for_place(place), (int, float)):
+            return self.get_points_for_place(place)
+        elif isinstance(self.get_points_for_place(place), str) and isinstance(self.get_points_for_meters(meters), (int, float)):
+            return self.get_points_for_meters(meters)
         else:
-            return 0
+            return None
     
 points_for_place = PointsForPlace()
 print(points_for_place.get_points_for_place(10))
@@ -39,4 +43,4 @@ print(points_for_meters.get_points_for_meters(10))
 total_points = TotalPoints()
 print(total_points.get_points_for_place(10))
 print(total_points.get_points_for_meters(10))
-print(total_points.get_total_points(100, 10))
+print(total_points.get_total_points(-1, -1))
